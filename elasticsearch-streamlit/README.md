@@ -1,5 +1,7 @@
+## Steps
 1. elasticsearch server 가동
-2. 
+2. Obsidian Vault를 elasticsearch에 업로드
+3. Streamlit app
 
 # 1. elasticsearch server 가동
 
