@@ -1,53 +1,11 @@
+1. elasticsearch server 가동
+2. 
+
 # 1. elasticsearch server 가동
 
 Ref: [Getting started with the Elastic Stack and Docker Compose](https://www.elastic.co/blog/getting-started-with-the-elastic-stack-and-docker-compose)
 
-## `.env`
-```
-# Project namespace (defaults to the current folder name if not set)
-#COMPOSE_PROJECT_NAME=myproject
-
-
-# Password for the 'elastic' user (at least 6 characters)
-ELASTIC_PASSWORD=changeme
-
-
-# Password for the 'kibana_system' user (at least 6 characters)
-KIBANA_PASSWORD=changeme
-
-
-# Version of Elastic products
-STACK_VERSION=8.7.1
-
-
-# Set the cluster name
-CLUSTER_NAME=docker-cluster
-
-
-# Set to 'basic' or 'trial' to automatically start the 30-day trial
-LICENSE=basic
-#LICENSE=trial
-
-
-# Port to expose Elasticsearch HTTP API to the host
-ES_PORT=9200
-
-
-# Port to expose Kibana to the host
-KIBANA_PORT=5601
-
-
-# Increase or decrease based on the available host memory (in bytes)
-ES_MEM_LIMIT=1073741824
-KB_MEM_LIMIT=1073741824
-LS_MEM_LIMIT=1073741824
-
-
-# SAMPLE Predefined Key only to be used in POC environments
-ENCRYPTION_KEY=c34d38b3a14956121ff2170e5030b471551370178f43e5626eec58b04a30fae2
-```
-
-## `docker-compose.yml`
+## 1-1. `docker-compose.yml`
 ```yaml
 version: "3.8"
 
@@ -174,8 +132,56 @@ services:
      retries: 120
 ```
 
-## self-signed SSL 인증서 추출
+## 1-2. `.env`
 
+stack을 생성할때 다음의 .env도 첨부해주어야 한다.
+
+```
+# Project namespace (defaults to the current folder name if not set)
+#COMPOSE_PROJECT_NAME=myproject
+
+
+# Password for the 'elastic' user (at least 6 characters)
+ELASTIC_PASSWORD=changeme
+
+
+# Password for the 'kibana_system' user (at least 6 characters)
+KIBANA_PASSWORD=changeme
+
+
+# Version of Elastic products
+STACK_VERSION=8.7.1
+
+
+# Set the cluster name
+CLUSTER_NAME=docker-cluster
+
+
+# Set to 'basic' or 'trial' to automatically start the 30-day trial
+LICENSE=basic
+#LICENSE=trial
+
+
+# Port to expose Elasticsearch HTTP API to the host
+ES_PORT=9200
+
+
+# Port to expose Kibana to the host
+KIBANA_PORT=5601
+
+
+# Increase or decrease based on the available host memory (in bytes)
+ES_MEM_LIMIT=1073741824
+KB_MEM_LIMIT=1073741824
+LS_MEM_LIMIT=1073741824
+
+
+# SAMPLE Predefined Key only to be used in POC environments
+ENCRYPTION_KEY=c34d38b3a14956121ff2170e5030b471551370178f43e5626eec58b04a30fae2
+```
+
+## 1-3. self-signed SSL 인증서 추출
+- 첫 실행때 elasticsearch가 SSL 인증서를 생성하는데, 이를 host의 `/tmp/ca.crt` 로 추출한다.
 ```sh
 docker cp elasticstack_docker-es01-1:/usr/share/elasticsearch/config/certs/ca/ca.crt /tmp/.
 ```
@@ -183,27 +189,22 @@ docker cp elasticstack_docker-es01-1:/usr/share/elasticsearch/config/certs/ca/ca
     - portainer에서는 stack 이름
     - docker compose CLI에서는 docker-compose.yml이 있는 폴더 이름
 
-## PING test
+## 1-4. PING test
 
 ```sh
 curl -k --cacert /tmp/ca.crt -u elastic:changeme https://localhost:9200
 ```
 ![alt text](image4.png)
 
-#2. Streamlit app
 
-```python
-```
-
----
-
-# Obsidian Vault를 elasticsearch에 업로드
+# 2. Obsidian Vault를 elasticsearch에 업로드
 
 ```python
 from glob import glob
 from elasticsearch import Elasticsearch, ConnectionError, ConnectionTimeout, helpers
 
-md_files = glob('/mnt/c/Users/j/Documents/obsidian-sync/**/*.md')
+# 자신의 obsidian vault 주소로 변경
+md_files = glob('/mnt/c/Users/j/Documents/obsidian-sync/**/*.md') 
 md_contents = []
 for file_path in md_files:
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -247,7 +248,7 @@ actions = [
 helpers.bulk(es, actions)
 ```
 
-# Streamlit app
+# 3. Streamlit app
 ```python
 # pip install streamlit streamlit-keyup elasticsearch
 import streamlit as st
