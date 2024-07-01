@@ -1,7 +1,7 @@
 ## Steps
 1. elasticsearch server 가동
 2. Obsidian Vault를 elasticsearch에 업로드
-3. Streamlit app
+3. Streamlit app으로 search-as-you-type 구현
 
 # 1. elasticsearch server 가동
 
