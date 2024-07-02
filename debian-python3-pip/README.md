@@ -37,13 +37,13 @@ $ pip install streamlit
 ```sh
 # 이미 씨스템 파이썬으로 jupyter, streamlit 설치한 경우에도
 $ which jupyter
-/home/w/.local/bin/jupyter # 씨스템 파이썬의 잔재
-/home/w/.venv/bin/streamlit
+/home/.../.local/bin/jupyter # 씨스템 파이썬의 잔재
+/home/.../.venv/bin/streamlit
 
 # 그냥 새로 깔아서 덮어씌워주면 된다. (PATH 앞쪽이라 우선순위 우위)
 $ pip install jupyterlab
 $ which jupyter
-/home/w/.venv/bin/jupyter
-/home/w/.venv/bin/streamlit
+/home/.../.venv/bin/jupyter
+/home/.../.venv/bin/streamlit
 
 ``` 
