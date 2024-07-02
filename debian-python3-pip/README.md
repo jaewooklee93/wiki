@@ -33,6 +33,7 @@ $ which python pip
 $ pip install streamlit
 ```
 
+- 기존 씨스템 파이썬에서 설치한 패키지와 충돌 상황 디버깅
 ```sh
 # 이미 씨스템 파이썬으로 jupyter, streamlit 설치한 경우에도
 $ which jupyter
