@@ -16,14 +16,14 @@ $ cd
 # venv이름 앞에 .을 붙여야 리눅스 숨김폴더라 눈에 안거슬림
 $ python3 -m venv .venv
 
+# .bashrc에서 PATH를 업데이트한다.
 $ echo -e '\nexport PATH="$HOME/.venv/bin:$PATH"\n' >> .bashrc
 
-# 눈으로 확인
+# .bashrc에 잘 반영되었는지 눈으로 확인한다.
 $ tail .bashrc
-...
-export PATH="$HOME/.venv/bin:$PATH"
+... export PATH="$HOME/.venv/bin:$PATH"
 
-# .bashrc 반영후 잘 됐는지 확인
+# bash를 새로 열고 잘 되는지 확인한다.
 $ bash
 $ which python pip
 /home/.../.venv/bin/python
