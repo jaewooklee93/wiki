@@ -45,5 +45,25 @@ $ pip install jupyterlab
 $ which jupyter
 /home/.../.venv/bin/jupyter
 /home/.../.venv/bin/streamlit
-
 ``` 
+
+- `anaconda`를 사용하던 경우 `.bashrc`에서 >>> 부터 <<< 사이의 내용을 제거해주어야 한다.
+- `~/anaconda` 폴더가 있다면 그냥 지워도 된다.
+```sh
+$ vi ~/.bashrc
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/me/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/me/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/me/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/me/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+```
