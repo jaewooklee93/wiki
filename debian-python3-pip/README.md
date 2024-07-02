@@ -39,7 +39,7 @@ $ which jupyter
 /home/w/.local/bin/jupyter # 씨스템 파이썬의 잔재
 /home/w/.venv/bin/streamlit
 
-# 그냥 새로 깔아서 덮어씌워주면 된다. (PATH 앞쪽에 있어서 우선순위가 우위)
+# 그냥 새로 깔아서 덮어씌워주면 된다. (PATH 앞쪽이라 우선순위 우위)
 $ pip install jupyterlab
 which jupyter
 /home/w/.venv/bin/jupyter
