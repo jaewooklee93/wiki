@@ -42,7 +42,7 @@ $ which jupyter
 
 # 그냥 새로 깔아서 덮어씌워주면 된다. (PATH 앞쪽이라 우선순위 우위)
 $ pip install jupyterlab
-which jupyter
+$ which jupyter
 /home/w/.venv/bin/jupyter
 /home/w/.venv/bin/streamlit
 
