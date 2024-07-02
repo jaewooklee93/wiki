@@ -13,7 +13,7 @@ which python pip python3 pip3
 # 홈폴더로 간다
 cd ~
 
-# .을 앞에 붙여야 리눅스 숨김폴더라 눈에 안거슬리고 실제로 옮기거나 삭제할 리스크도 줄어든다
+# venv이름 앞에 .을 붙여야 리눅스 숨김폴더라 눈에 안거슬림
 python3 -m venv .venv
 
 echo -e '\nexport PATH="$HOME/.venv/bin:$PATH"\n' >> .bashrc
