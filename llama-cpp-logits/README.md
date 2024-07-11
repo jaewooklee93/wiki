@@ -73,6 +73,19 @@ pip install requests polars
 import requests
 import polars as pl
 pl.Config.set_tbl_rows(40)
+
+prompt = """A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions.
+Human: 한국의 수도는 어디인가요? 아래 선택지 중 골라주세요.
+
+(A) 경성
+(B) 부산
+(C) 평양
+(D) 서울
+(E) 전주
+Assistant:
+
+정답은 ("""
+
 response = requests.post(
     'http://localhost:8080/completion',
     json={"prompt": prompt,
