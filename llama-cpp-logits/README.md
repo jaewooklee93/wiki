@@ -32,7 +32,7 @@ $ curl --request POST \
 ```
 
 ```json
-{"content":"\n\n**1. Define Your Purpose:**\n\n* What do you want to achieve with your website? ... }
+{"content":"\n\n**1. Define Your Purpose:**\n\n* What do you want to achieve with your website?", ... }
 ```
 
 ## Python Client
@@ -77,9 +77,6 @@ response = requests.post(
           "n_probs":40
          }
 ).json()
-
-# print(response['content'])
-
 
 df = pl.DataFrame(response['completion_probabilities'][0]['probs'])
 print(df)
