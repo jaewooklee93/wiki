@@ -31,7 +31,7 @@ $ curl --request POST \
     --data '{"prompt": "Building a website can be done in 10 simple steps:","n_predict": 128}'
 ```
 
-```json
+```javascript
 {"content":"\n\n**1. Define Your Purpose:**\n\n* What do you want to achieve with your website?", ... }
 ```
 
