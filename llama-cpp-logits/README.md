@@ -22,6 +22,10 @@ volumes:
   llama-cache:
 ```
 
+## http://localhost:8080 브라우저 접속
+- llama.cpp에서 minimal Web UI를 제공한다.
+- 첫 실행시에는 `llama-cache` 볼륨에 모델을 다운로드 받기 위해 시간이 조금 소요될 수 있다.
+
 ## cURL test
 
 ```bash
