@@ -32,7 +32,7 @@ $ curl --request POST \
 ```
 
 ```json
-{"content":"\n\n**1. Define Your Purpose:**\n\n* What do you want to achieve with your website? (e.g., sell products, share information, build a community)\n* Who is your target audience?\n\n**2. Choose a Domain Name:**\n\n* Select a memorable and relevant name that reflects your website's purpose.\n* Check availability and register your domain name.\n\n**3. Select a Web Hosting Provider:**\n\n* Choose a reliable hosting provider that offers the necessary resources (storage, bandwidth, etc.) for your website.\n* Consider factors like price, uptime, and customer support.\n\n**4.","id_slot":0, ... }
+{"content":"\n\n**1. Define Your Purpose:**\n\n* What do you want to achieve with your website? ... }
 ```
 
 ## Python Client
@@ -56,15 +56,7 @@ print(response['content'])
 
 **2. Choose a Domain Name:**
 
-* Select a memorable and relevant name that reflects your website's purpose.
-* Check availability and register your domain name.
-
-**3. Select a Web Hosting Provider:**
-
-* Choose a reliable hosting provider that offers the necessary resources (storage, bandwidth, etc.) for your website.
-* Consider factors like price, uptime, and customer support.
-
-**4.
+...
 ```
 
 ## Single token prediction with probs
