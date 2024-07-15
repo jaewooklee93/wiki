@@ -1,3 +1,5 @@
+# pip install requests polars bs4
+
 import requests, re
 import polars as pl
 from bs4 import BeautifulSoup as Soup
