@@ -89,13 +89,15 @@ contributors](https://github.com/ggerganov/llama.cpp/issues/4216)."}, "ko-KR"
 
         Response:
 
-{"src": "# LLaMA.cpp HTTP 서버  [httplib](https://github.com/yhirose/cpp-httplib),
-[nlohmann::json](https://github.com/nlohmann/json) 및 **llama.cpp** 기반의 빠르고 가벼운
-순수 C/C++ HTTP 서버입니다.  LLM REST API 세트 및 llama.cpp와 상호 작용하기 위한 간단한 웹 프런트 엔드입니다.
-**특징:**  * GPU 및 CPU에서 F16 및 양자 모델의 LLM 유추  * [OpenAI
-API](https://github.com/openai/openai-openapi) 호환되는 채팅 완성 및 잠재형 엔드포인트  * 다중 사용자
-지원을 가진 병렬 디코딩  * 지속적인 배치 처리  * 다중 모달 (준비 중)  * 모니터링 엔드포인트  * 스키마 제약 JSON 응답 형식
-이 프로젝트는 적극적으로 개발 중이며, [피드백 및 기여자를 찾고
+{"src": "# LLaMA.cpp HTTP 서버
+[httplib](https://github.com/yhirose/cpp-httplib),
+[nlohmann::json](https://github.com/nlohmann/json) 및 **llama.cpp** 기반의
+빠르고 가벼운 순수 C/C++ HTTP 서버입니다. LLM REST API 세트 및 llama.cpp와 상호
+작용하기 위한 간단한 웹 프런트 엔드입니다. **특징:** * GPU 및 CPU에서 F16 및
+양자 모델의 LLM 유추 * [OpenAI API](https://github.com/openai/openai-openapi)
+호환되는 채팅 완성 및 잠재형 엔드포인트 * 다중 사용자 지원을 가진 병렬 디코딩 *
+지속적인 배치 처리 * 다중 모달 (준비 중) * 모니터링 엔드포인트 * 스키마 제약
+JSON 응답 형식 이 프로젝트는 적극적으로 개발 중이며, [피드백 및 기여자를 찾고
 있습니다](https://github.com/ggerganov/llama.cpp/issues/4216)."}
 
 ---
