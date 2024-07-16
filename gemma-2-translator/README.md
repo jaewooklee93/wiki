@@ -88,7 +88,7 @@ completions and embeddings routes  * Parallel decoding with multi-user support
 * Continuous batching  * Multimodal (wip)  * Monitoring endpoints  * Schema-
 constrained JSON response format  The project is under active development, and
 we are [looking for feedback and
-contributors](https://github.com/ggerganov/llama.cpp/issues/4216)."}, "ko-KR"
+contributors](https://github.com/ggerganov/llama.cpp/issues/4216)."}, "ko-KR":
 
 ---
 
