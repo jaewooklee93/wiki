@@ -71,6 +71,7 @@ except:
     print(result)
 ```
 
+## Output
 ```sh
 $ python app.py 
 
@@ -103,12 +104,10 @@ contributors](https://github.com/ggerganov/llama.cpp/issues/4216)."}, "ko-KR"
 지속적인 배치 처리 * 다중 모달 (준비 중) * 모니터링 엔드포인트 * 스키마 제약
 JSON 응답 형식 이 프로젝트는 적극적으로 개발 중이며, [피드백 및 기여자를 찾고
 있습니다](https://github.com/ggerganov/llama.cpp/issues/4216)."}
-
----
-
-
-        Markdown:
 ```
+
+## Markdown:
+
 # LLaMA.cpp HTTP 서버
 
 [httplib](https://github.com/yhirose/cpp-httplib), [nlohmann::json](https://github.com/nlohmann/json) 및 **llama.cpp** 기반의 빠르고 가벼운 순수 C/C++ HTTP 서버입니다.
