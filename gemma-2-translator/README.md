@@ -4,20 +4,24 @@ import json, re, requests
 
 example = '''# LLaMA.cpp HTTP Server
 
-Fast, lightweight, pure C/C++ HTTP server based on [httplib](https://github.com/yhirose/cpp-httplib), [nlohmann::json](https://github.com/nlohmann/json) and **llama.cpp**.
+Fast, lightweight, pure C/C++ HTTP server based on [httplib](https://github.com/\
+yhirose/cpp-httplib), [nlohmann::json](https://github.com/nlohmann/json) and \
+**llama.cpp**.
 
 Set of LLM REST APIs and a simple web front end to interact with llama.cpp.
 
 **Features:**
  * LLM inference of F16 and quantum models on GPU and CPU
- * [OpenAI API](https://github.com/openai/openai-openapi) compatible chat completions and embeddings routes
+ * [OpenAI API](https://github.com/openai/openai-openapi) compatible chat \
+completions and embeddings routes
  * Parallel decoding with multi-user support
  * Continuous batching
  * Multimodal (wip)
  * Monitoring endpoints
  * Schema-constrained JSON response format
 
-The project is under active development, and we are [looking for feedback and contributors](https://github.com/ggerganov/llama.cpp/issues/4216).'''
+The project is under active development, and we are [looking for feedback and \
+contributors](https://github.com/ggerganov/llama.cpp/issues/4216).'''
 
 prompt = {
     'filename': '/ggerganov/llama.cpp/master/examples/server/README.md',
