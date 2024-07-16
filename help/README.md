@@ -38,7 +38,10 @@ if __name__ == "__main__":
             
             print(f'\n{head}{script}')
             print()
-            os.system(script)
+            '''
+            주의: 실제로 실행시키려면 아래 줄의 주석을 해제하고 사용하세요.
+            '''
+            # os.system(script)
 ```
 
 ```sh
