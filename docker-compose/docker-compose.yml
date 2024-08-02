@@ -1,0 +1,155 @@
+networks:
+  default:
+    external:
+      name: my_network
+
+services:
+  nginx:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+    environment:
+      # Mysql/Maria connection parameters:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+      DISABLE_IPV6: 'true'
+    volumes:
+      - /mnt/docker/nginx:/data
+      - /mnt/docker/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+      MARIADB_AUTO_UPGRADE: '1'
+    volumes:
+      - /mnt/docker/mysql:/var/lib/mysql
+
+  redis:
+    image: redis/redis-stack:latest
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+      - 8001:8001
+    volumes:
+      - /mnt/docker/redis:/data
+    environment:
+      - REDIS_ARGS=--appendonly yes
+
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - /mnt/docker/mongodb:/data/db
+      - /mnt/docker/configdb:/data/configdb
+
+  mongo-express:
+    image: mongo-express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
+  hello:
+    image: docker.yauk.tv/streamlit
+    restart: unless-stopped
+
+
+  minio:
+    image: quay.io/minio/minio
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - /mnt/ssd/.minio:/data
+    command: server /data --console-address ":9001"
+    
+  registry:
+    image: registry:2
+    restart: unless-stopped
+    volumes:
+      - /mnt/docker/registry:/var/lib/registry
+
+  cdn:
+    image: node:slim
+    volumes:
+      - /mnt/docker/cdn:/app
+    entrypoint: sh -c
+    command:
+    - |
+      cd /app
+      cat <<"EOF" > server.js
+      const express = require('express');
+      const cors = require('cors');
+      const path = require('path');
+      const fs = require('fs');
+      const app = express();
+      const PORT = 8000;
+
+      app.use(cors());
+      app.use(express.static(path.join(__dirname, 'node_modules')));
+
+      // 기본 라우트
+      app.get('/', (req, res) => {
+          res.send('Hello, World! Use /<filename> to access files.');
+      });
+
+
+      app.get('/:filename', (req, res) => {
+          const filePath = path.join(__dirname, req.params.filename);
+          fs.access(filePath, fs.constants.F_OK, (err) => {
+              if (err) {
+                  return res.status(404).send('File not found');
+              }
+              res.sendFile(filePath);
+          });
+      });
+      app.listen(PORT, () => { console.log('Server is running on http://localhost:' + PORT); });
+      EOF
+
+      npm init -y
+      npm i express cors pretendard @picocss/pico
+      node server.js
+
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy
+    environment:
+      - LANG=ko
+      - WG_HOST=192.168.12.2
+      - WEBUI_HOST=wg-easy
+      - PASSWORD_HASH='REDACTED'
+      - PORT=51821
+      - WG_PORT=51820
+      - WG_DEFAULT_DNS=
+      - WG_PERSISTENT_KEEPALIVE=25
+      - WG_ALLOWED_IPS=10.8.0.0/24
+    volumes:
+      - ~/.wg-easy:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
