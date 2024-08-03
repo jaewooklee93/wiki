@@ -5,7 +5,9 @@ VPN 연결을 생성하면 Server도 Client를 볼 수 있게 됩니다.
 
 - 아래의 명령어로 wireguard.py를 다운로드 받습니다.
 ```sh
-wget -q https://raw.githubusercontent.com/jaewooklee93/wiki/master/wireguard/wireguard.py
+wget -q -O wireguard.py \
+https://raw.githubusercontent.com/jaewooklee93/wiki/master/wireguard/wireguard.py
+chmod +x wireguard.py
 
 ```
 
@@ -20,7 +22,8 @@ chmod +x wireguard.py
 ### Client (`<Unknown>` -> `10.0.0.2`)
 
 ```sh
-sudo nmap 192.168.12.2 -p 51820 -sU # server측 51820/udp 포트 접근가능여부 확인
+# server측 51820/udp 포트 접근가능여부 확인
+sudo nmap 192.168.12.2 -p 51820 -sU
 
 chmod +x client
 ./client # 연결 개시
