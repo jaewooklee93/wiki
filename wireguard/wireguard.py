@@ -57,12 +57,15 @@ def generate_config(server_ip, server_port=51820):
                 if [ "$1" = "down" ]; then
                     sudo wg-quick down ~/.wg/server.conf >/dev/null 2>&1
                     echo "interface: server deleted"
-                else
+                fi
                     echo
                     sudo wg
                     echo
                 fi
             else
+                if [ "$1" = "down" ]; then
+                    echo "no interface: server"
+                else
                 sudo wg-quick up ~/.wg/server.conf >/dev/null 2>&1
                 echo
                 echo "interface: server created"
@@ -102,12 +105,15 @@ def generate_config(server_ip, server_port=51820):
                 if [ "$1" = "down" ]; then
                     sudo wg-quick down ~/.wg/client.conf >/dev/null 2>&1
                     echo "interface: client deleted"
-                else
+                fi
                     echo
                     sudo wg
                     echo
                 fi
             else
+                if [ "$1" = "down" ]; then
+                    echo "no interface: client"
+                else
                 sudo wg-quick up ~/.wg/client.conf >/dev/null 2>&1
                 echo
                 echo "interface: client created"
