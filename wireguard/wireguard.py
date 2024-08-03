@@ -14,7 +14,7 @@ def keygen():
         print(dedent(f'''\n
         🚨  Ensure that WireGuard is installed on your system.
         
-        {YELLOW}sudo apt update && sudo apt install -y wireguard\n
+        {YELLOW}sudo apt update && sudo apt install -y wireguard\n{WHITE}
         '''))
         exit(-1)
         
@@ -144,7 +144,7 @@ def generate_config(server_ip, server_port=51820):
         {YELLOW}server $ curl 10.0.0.2:8000\n
         {WHITE}Disconnect:
         {CYAN}server $ ./server down
-        {YELLOW}client $ ./client down
+        {YELLOW}client $ ./client down{WHITE}
     ''')
 
 if __name__ == '__main__':
