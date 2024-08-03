@@ -3,14 +3,17 @@
 - Client는 Server를 볼 수 있지만, Server는 Client를 볼 수 없는 경우,
 VPN 연결을 생성하면 Server도 Client를 볼 수 있게 됩니다.
 
-
+- 아래의 명령어로 wireguard.py를 다운로드 받습니다.
 ```sh
 wget -q https://raw.githubusercontent.com/jaewooklee93/wiki/master/wireguard/wireguard.py
-chmod +x wireguard.py
-./wireguard.py 192.168.12.2 # server의 IP 주소로 번경
+
 ```
 
-
+- 아래의 코드에서 IP를 자신의 server의 IP로 변경하여 실행합니다.
+```sh
+chmod +x wireguard.py
+./wireguard.py 192.168.12.2 # CHANGE
+```
 - 현재 폴더에 `./server`, `./client` 파일이 생성됩니다. 각각을 server와 client의 컴퓨터에 복사하여 실행합니다.
 
 
