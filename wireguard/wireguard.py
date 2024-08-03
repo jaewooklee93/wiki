@@ -2,7 +2,7 @@
 
 import sys, os
 
-CYAN, YELLOW, WHITE = '\x1b[36m', '\x1b[33m', '\x1b[0m'
+CYAN, YELLOW, GREEN, WHITE = '\x1b[96m', '\x1b[93m', "\033[92m", '\x1b[0m'
 
 def dedent(text):
     return '\n'.join(
@@ -10,7 +10,7 @@ def dedent(text):
     )
 
 def keygen():
-    if os.system('wg --version >/dev/null'):
+    if os.system('wg --version >/dev/null 2>&1'):
         print(dedent(f'''\n
         🚨  Ensure that WireGuard is installed on your system.
         
@@ -150,10 +150,10 @@ def generate_config(server_ip, server_port=51820):
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print(dedent(f'''
-            Usage: {YELLOW}python3 wireguard.py SERVER_IP_OR_DOMAIN [PORT]{WHITE}
+            Usage: {GREEN}python3 wireguard.py SERVER_IP_OR_DOMAIN [PORT]{WHITE}
 
             Examples:
-            {YELLOW}python3 wireguard.py 192.168.0.2
+            {GREEN}python3 wireguard.py 192.168.0.2
             python3 wireguard.py wg.yauk.tv 12345{WHITE} 
         '''))
     else:
