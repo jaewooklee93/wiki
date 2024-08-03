@@ -6,13 +6,14 @@ networks:
 services:
   mensa:
     image: python
+    restart: unless-stopped
     volumes:
       - /mnt/docker/mensa:/app
     working_dir: /app
     entrypoint: python -m http.server
 
   yauk-net:
-    image: docker.yauk.tv/streamlit
+    image: jay817/streamlit
     restart: unless-stopped
     entrypoint: bash -c
     command:
