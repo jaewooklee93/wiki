@@ -140,13 +140,8 @@ def generate_config(server_ip, server_port=51820):
         {YELLOW}server $ ./server
         {CYAN}client $ ./client\n
         {WHITE}cURL test:
-        {YELLOW}server $ python -m http.server
-        {CYAN}client $ curl 10.0.0.1:8000
         {CYAN}client $ python -m http.server
         {YELLOW}server $ curl 10.0.0.2:8000\n
-        {WHITE}Status check:
-        {YELLOW}server $ ./server
-        {CYAN}client $ ./client\n
         {WHITE}Disconnect:
         {CYAN}server $ ./server down
         {YELLOW}client $ ./client down
