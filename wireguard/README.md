@@ -13,7 +13,6 @@ chmod +x wireguard.py
 
 - 아래의 코드에서 IP를 자신의 server의 IP로 변경하여 실행합니다.
 ```sh
-chmod +x wireguard.py
 ./wireguard.py 192.168.12.2 # CHANGE
 ```
 - 현재 폴더에 `./server`, `./client` 파일이 생성됩니다. 각각을 server와 client의 컴퓨터에 복사하여 실행합니다.
