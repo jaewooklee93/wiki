@@ -15,6 +15,7 @@
 ```yaml
 x-defaults: &defaults
   restart: unless-stopped
+  stop_grace_period: 0s
   deploy:
     resources:
       reservations:
