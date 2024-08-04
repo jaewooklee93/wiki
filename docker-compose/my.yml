@@ -1,0 +1,109 @@
+x-db: &db
+  restart: unless-stopped
+  networks:
+    - my_network
+
+x-defaults: &defaults
+  restart: unless-stopped
+  networks:
+    - my_network
+  stop_grace_period: 0s
+
+networks:
+  my_network:
+    external: true
+
+services:
+  nginx:
+    image: 'jc21/nginx-proxy-manager:latest'
+    <<: *defaults
+    ports:
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+    environment:
+      # Mysql/Maria connection parameters:
+      DB_MYSQL_HOST: "mysql"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+      DISABLE_IPV6: 'true'
+    volumes:
+      - /mnt/docker/nginx:/data
+      - /mnt/docker/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - mysql
+
+  mongo-express:
+    image: mongo-express
+    <<: *defaults
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
+  hello:
+    image: jay817/streamlit
+    <<: *defaults
+    command: hello
+    
+
+  cdn:
+    image: node:slim
+    <<: *defaults
+    volumes:
+      - /mnt/docker/cdn:/app
+    working_dir: /app
+    command: node server.js
+
+
+  mysql:
+    image: 'jc21/mariadb-aria:latest'
+    <<: *db
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+      MARIADB_AUTO_UPGRADE: '1'
+    volumes:
+      - /mnt/docker/mysql:/var/lib/mysql
+
+  redis:
+    image: redis/redis-stack:latest
+    <<: *db
+    ports:
+      - 6379:6379
+    volumes:
+      - /mnt/docker/redis:/data
+    environment:
+      - REDIS_ARGS=--appendonly yes
+
+  mongo:
+    image: mongo
+    <<: *db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - /mnt/docker/mongodb:/data/db
+      - /mnt/docker/configdb:/data/configdb
+
+  registry:
+    image: registry:2
+    <<: *db
+    volumes:
+      - /mnt/docker/registry:/var/lib/registry
+      
+  # minio:
+  #   image: quay.io/minio/minio
+    # <<: *db
+  #   ports:
+  #     - "9000:9000"
+  #   volumes:
+  #     - /mnt/ssd/.minio:/data
+  #   command: server /data --console-address ":9001"

@@ -1,134 +1,28 @@
+x-defaults: &defaults
+  restart: unless-stopped
+  networks:
+    - my_network
+  stop_grace_period: 0s
+  environment:
+    - OPENAI_API_KEY=$OPENAI_API_KEY
+
 networks:
-  default:
-    external:
-      name: my_network
+  my_network:
+    external: true
 
 services:
   mensa:
     image: python
-    restart: unless-stopped
+    container_name: mensa
+    <<: *defaults
     volumes:
-      - /mnt/docker/mensa:/app
+      - /mnt/docker/public/mensa:/app
     working_dir: /app
-    entrypoint: python -m http.server
+    entrypoint: python -m http.server 80
 
   yauk-net:
     image: jay817/streamlit
-    restart: unless-stopped
-    entrypoint: bash -c
-    command:
-      - |
-        pip install redis openai
-        cat <<"EOF" > streamlit_app.py
-        import streamlit as st
-        st.set_page_config(page_title="오늘놀자", page_icon=":kr:", layout='wide')
-        import os, re, logging, uuid, json, time, redis, openai
-
-        def render_equation(response):
-            response = re.sub(r'\\\[([^\]]+?)\\\]', r'$$\1$$', response)
-            response = re.sub(r'\\\(([^\)]+?)\\\)', r'$\1$', response)
-            return response
-
-
-        r = redis.Redis('redis', db=1)
-        st.html("""<style>
-        @import url("https://cdn.yauk.net/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css");
-
-        header, ::-webkit-scrollbar { display: none !important; }
-
-        *:not(pre):not(code):not(kbd):not(.katex):not(span) {
-            font-family: -apple-system, "Pretendard Variable", sans-serif !important;
-            font-weight: 300;
-            strong { font-weight: 500; }
-        }
-
-        code {
-            font-family: "Source Code Pro", "Pretendard Variable", monospace;
-            color: #37e0b5;
-        }
-
-        pre * {
-            font-size: 12px !important;
-        }
-
-        h1, h2, h3, h4, h5, h6 { font-weight: 250 !important; }
-
-
-        .block-container {
-            /*max-width:46rem; */
-            padding-left: 1rem;
-            padding-right: 2rem;
-            @media (orientation: landscape) { padding-top: 1rem; }
-        }
-        </style>""")
-
-
-        logging.basicConfig(
-            level=logging.INFO, format='%(asctime)s - %(message)s',
-            handlers=[logging.FileHandler("app.log"), ]
-        )
-
-
-        client = openai.OpenAI(api_key="$OPENAI_API_KEY")
-
-        # visible page starts
-
-        st.subheader('🕊️ 오늘놀자', divider='gray')
-
-        # print history
-
-        if "messages" not in st.session_state:
-            st.session_state.messages = []
-            st.session_state["session_id"] = str(uuid.uuid4())
-
-        for message in st.session_state.messages:
-            with st.chat_message(message["role"]):
-                st.markdown(render_equation(message["content"]))
-
-        # user prompt
-        if prompt := st.chat_input("Message ChatGTP"):
-            with st.chat_message("user"):
-                st.write(prompt)
-                st.session_state.messages.append({"role": "user", "content": prompt})
-                logging.info(f"{st.session_state['session_id']} - User: {prompt}")
-
-
-            # generate reseponse
-            with st.chat_message("assistant"):
-                stream = client.chat.completions.create(
-                    model="gpt-4o-mini",
-                    messages=[{"role": msg["role"], "content": msg["content"]}
-                        for msg in st.session_state.messages],
-                    temperature=0,
-                    stream=True,
-                )
-
-                response, buffer = "", ""
-                def wrapper():
-                    global response, buffer
-                    for chunk in stream:
-                        chunk = chunk.choices[0].delta.content
-                        if chunk is not None:
-                            response += chunk
-                            buffer += chunk
-                            if buffer.count("\\[") == buffer.count("\\]") and \
-                                buffer.count("\\(") == buffer.count("\\)") and \
-                                not buffer.endswith("\\"):
-                                    yield render_equation(buffer)
-                                    buffer = ""
-                with st.empty():
-                    st.write_stream(wrapper())
-                    if buffer:
-                        st.write(render_equation(response))
-
-
-                logging.info(f"{st.session_state['session_id']} - Model: {response}")
-                st.session_state.messages.append({"role": "assistant", "content": response})
-
-                r.rpush('yauk.net', json.dumps({
-                    'timestamp': time.time(),
-                    'session_id': st.session_state['session_id'],
-                    'messages': st.session_state.messages,
-                }))
-        EOF
-        streamlit run streamlit_app.py
+    container_name: yauk-net
+    <<: *defaults
+    volumes:
+      - /mnt/docker/public/yauk-net:/app

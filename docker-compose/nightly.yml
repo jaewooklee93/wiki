@@ -1,0 +1,29 @@
+x-defaults: &defaults
+  restart: unless-stopped
+  networks:
+    - my_network
+  stop_grace_period: 0s
+
+networks:
+  my_network:
+    external: true
+
+
+services:
+  watch:
+    image: python
+    container_name: watch
+    <<: *defaults
+    volumes:
+      - /mnt/docker/public/watch:/app
+    working_dir: /app
+    command: python app.py
+
+  yauk-tv:
+    image: python
+    container_name: yauk-tv
+    <<: *defaults
+    volumes:
+      - /mnt/docker/public/yauk-tv:/app
+    working_dir: /app
+    command: python -m http.server
